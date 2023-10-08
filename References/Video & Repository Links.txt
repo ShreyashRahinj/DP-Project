@@ -1,0 +1,6 @@
+Java MySQl - Pranav Khurana Github
+https://github.com/pranavkhurana/Time-table-scheduler/tree/master/src/scheduler
+
+Python Django - Github + Youtube
+https://github.com/abhayshah0305/TimetableGenerationSystem
+https://youtu.be/aMz2gP2Z4Qw?feature=shared
