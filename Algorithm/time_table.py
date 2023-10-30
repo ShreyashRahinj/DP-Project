@@ -1,5 +1,6 @@
 from random import randrange, choices, random
 from prettytable import PrettyTable
+from time import perf_counter
 
 POPULATION_SIZE = 9
 NUM_OF_ELITE_SCHEDULES = 1
@@ -401,6 +402,7 @@ population.get_schedules().sort(key=lambda s: s.get_fitness(), reverse=True)
 displayMgr.print_generation(population)
 displayMgr.print_schedule_as_table(population.get_schedules()[0])
 
+start = perf_counter()
 while population.get_schedules()[0].get_fitness() != 1.0:
     gen += 1
     print(f'Generation: {gen}')
@@ -409,3 +411,6 @@ while population.get_schedules()[0].get_fitness() != 1.0:
     displayMgr.print_generation(population)
     displayMgr.print_schedule_as_table(population.get_schedules()[0])
     print()
+
+end = perf_counter()
+print(f'Time taken: {end - start}')
