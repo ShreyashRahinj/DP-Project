@@ -11,10 +11,10 @@ TOURNAMENT_SELECTION_SIZE = 3
 # Initial data which has been hard-coded
 class Data:
     ROOMS = [['R1', 25], ['R2', 45], ['R3', 35]]
-    TEACHERS = [['T1', 'Angela White'],
-                ['T2', 'Mia Malkova'],
-                ['T3', 'Dani Daniels'],
-                ['T4', 'Lana Rhoades']]
+    TEACHERS = [['T1', 'Prema Kadam'],
+                ['T2', 'Santosh Kumar'],
+                ['T3', 'Varsha Jadhav'],
+                ['T4', 'Vivek Patil']]
     MEETINGTIMES = [['M1', 'MWF 09:00 - 10:00'],
                     ['M2', 'MWF 10:00 - 11:00'],
                     ['M3', 'TTH 09:00 - 10:30'],
