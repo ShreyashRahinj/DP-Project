@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:frontend/view/screens/home_screen.dart';
+import 'package:frontend/view/constants/routes.dart';
 
 void main() {
   runApp(const MyApp());
@@ -17,7 +17,8 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSwatch(primarySwatch: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: const HomeScreen(),
+      routes: routes,
+      initialRoute: homeScreenRoute,
     );
   }
 }

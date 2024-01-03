@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:frontend/view/constants/colors.dart';
+import 'package:frontend/view/constants/routes.dart';
+import 'package:frontend/view/widgets/app_feature_tile.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -9,30 +11,33 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  void toLoginDialog() {
+    Navigator.pushNamed(context, loginScreenRoute);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: primaryTheme['homeBg'],
+      backgroundColor: PrimaryTheme.homeBg,
       appBar: PreferredSize(
         preferredSize: const Size(double.infinity, 40),
         child: AppBar(
-          backgroundColor: primaryTheme['appBarBg'],
+          backgroundColor: PrimaryTheme.appBarBg,
           leadingWidth: MediaQuery.sizeOf(context).width / 4,
           title: InkWell(
             onTap: () {},
-            child: Text(
+            child: const Text(
               'Timetable Scheduler',
-              style:
-                  TextStyle(fontSize: 18, color: primaryTheme['appBarTitle']),
+              style: TextStyle(fontSize: 18, color: PrimaryTheme.appWhite),
             ),
           ),
           actions: [
             InkWell(
               onTap: () {},
-              child: Text(
+              child: const Text(
                 'About Us',
                 style: TextStyle(
-                  color: primaryTheme['appBarTitle'],
+                  color: PrimaryTheme.appWhite,
                   fontSize: 16,
                   fontWeight: FontWeight.normal,
                 ),
@@ -40,11 +45,13 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
             const SizedBox(width: 16),
             InkWell(
-              onTap: () {},
-              child: Text(
+              onTap: () {
+                Navigator.pushNamed(context, loginScreenRoute);
+              },
+              child: const Text(
                 'Sign Up',
                 style: TextStyle(
-                  color: primaryTheme['appBarTitle'],
+                  color: PrimaryTheme.appWhite,
                   fontSize: 16,
                   fontWeight: FontWeight.normal,
                 ),
@@ -69,21 +76,21 @@ class _HomeScreenState extends State<HomeScreen> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text(
+                        const Text(
                           'Timetable Scheduler',
                           style: TextStyle(
-                            color: primaryTheme['homeTextBlack'],
+                            color: PrimaryTheme.appBlack,
                             fontSize: 48,
                             fontWeight: FontWeight.bold,
                           ),
                         ),
                         const SizedBox(height: 24),
-                        SizedBox(
+                        const SizedBox(
                           width: 386,
                           child: Text(
                             'Create and generate whole year\'s timetable online by following just few steps. Super easy and fast timetable generation.',
                             style: TextStyle(
-                              color: primaryTheme['homeTextBlack'],
+                              color: PrimaryTheme.appBlack,
                               fontSize: 24,
                               fontWeight: FontWeight.w200,
                             ),
@@ -91,17 +98,17 @@ class _HomeScreenState extends State<HomeScreen> {
                         ),
                         const SizedBox(height: 24),
                         InkWell(
-                          onTap: () {},
+                          onTap: toLoginDialog,
                           child: Container(
                             padding: const EdgeInsets.all(8.0),
                             decoration: BoxDecoration(
-                              color: primaryTheme['homeButtonBg'],
+                              color: PrimaryTheme.homeButtonBg,
                               borderRadius: BorderRadius.circular(8),
                             ),
-                            child: Text(
+                            child: const Text(
                               'Create Timetable',
                               style: TextStyle(
-                                color: primaryTheme['homeTextBlack'],
+                                color: PrimaryTheme.appBlack,
                                 fontSize: 22,
                                 fontWeight: FontWeight.normal,
                               ),
@@ -121,180 +128,39 @@ class _HomeScreenState extends State<HomeScreen> {
             Container(
               height: MediaQuery.sizeOf(context).height / 2,
               decoration: BoxDecoration(
-                color: primaryTheme['homeAboutBg'],
+                color: PrimaryTheme.homeAboutBg,
                 image: DecorationImage(
                   fit: BoxFit.fitHeight,
                   image:
                       Image.asset('assets/images/tt_home_preview_2.png').image,
                 ),
               ),
-              child: Row(
+              child: const Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
-                  Container(
-                    padding: const EdgeInsets.all(16),
-                    height: 299,
-                    width: 380,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(10),
-                      gradient: LinearGradient(
-                        begin: Alignment.topCenter,
-                        end: Alignment.bottomCenter,
-                        colors: [
-                          primaryTheme['homeAboutGd1']!,
-                          primaryTheme['homeAboutGd2']!,
-                        ],
-                      ),
-                    ),
-                    child: Column(
-                      children: [
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Icon(
-                              Icons.check,
-                              color: primaryTheme['homeTextBlack'],
-                            ),
-                            const SizedBox(width: 10),
-                            Text(
-                              'Easy to Use',
-                              style: TextStyle(
-                                color: primaryTheme['homeTextBlack'],
-                                fontSize: 32,
-                                fontWeight: FontWeight.w500,
-                              ),
-                            ),
-                          ],
-                        ),
-                        const SizedBox(height: 20),
-                        Text(
-                          'Create timetable by following easy steps.',
-                          style: TextStyle(
-                            color: primaryTheme['homeTextBlack'],
-                            fontSize: 24,
-                            fontWeight: FontWeight.normal,
-                          ),
-                        ),
-                        Text(
-                          'Complete all the requirements and generate the time table Easily',
-                          style: TextStyle(
-                            color: primaryTheme['homeTextBlack'],
-                            fontSize: 24,
-                            fontWeight: FontWeight.normal,
-                          ),
-                        ),
-                      ],
-                    ),
+                  AppFeatureTile(
+                    icon: Icons.check,
+                    title: 'Easy to Use',
+                    description: [
+                      'Create timetable by following easy steps.',
+                      'Complete all the requirements and generate the time table Easily.',
+                    ],
                   ),
-                  Container(
-                    padding: const EdgeInsets.all(16),
-                    height: 299,
-                    width: 380,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(10),
-                      gradient: LinearGradient(
-                        begin: Alignment.topCenter,
-                        end: Alignment.bottomCenter,
-                        colors: [
-                          primaryTheme['homeAboutGd1']!,
-                          primaryTheme['homeAboutGd2']!,
-                        ],
-                      ),
-                    ),
-                    child: Column(
-                      children: [
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Icon(
-                              Icons.check,
-                              color: primaryTheme['homeTextBlack'],
-                            ),
-                            const SizedBox(width: 10),
-                            Text(
-                              'Flawless ',
-                              style: TextStyle(
-                                color: primaryTheme['homeTextBlack'],
-                                fontSize: 32,
-                                fontWeight: FontWeight.w500,
-                              ),
-                            ),
-                          ],
-                        ),
-                        const SizedBox(height: 20),
-                        Text(
-                          'Generate a timetable with no errors.',
-                          style: TextStyle(
-                            color: primaryTheme['homeTextBlack'],
-                            fontSize: 24,
-                            fontWeight: FontWeight.normal,
-                          ),
-                        ),
-                        Text(
-                          'Conflicts free super easy experience',
-                          style: TextStyle(
-                            color: primaryTheme['homeTextBlack'],
-                            fontSize: 24,
-                            fontWeight: FontWeight.normal,
-                          ),
-                        ),
-                      ],
-                    ),
+                  AppFeatureTile(
+                    icon: Icons.check,
+                    title: 'Flawless',
+                    description: [
+                      'Generate a timetable with no errors.',
+                      'Conflicts free super easy experience.',
+                    ],
                   ),
-                  Container(
-                    padding: const EdgeInsets.all(16),
-                    height: 299,
-                    width: 380,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(10),
-                      gradient: LinearGradient(
-                        begin: Alignment.topCenter,
-                        end: Alignment.bottomCenter,
-                        colors: [
-                          primaryTheme['homeAboutGd1']!,
-                          primaryTheme['homeAboutGd2']!,
-                        ],
-                      ),
-                    ),
-                    child: Column(
-                      children: [
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Icon(
-                              Icons.check,
-                              color: primaryTheme['homeTextBlack'],
-                            ),
-                            const SizedBox(width: 10),
-                            Text(
-                              'Quick Generate',
-                              style: TextStyle(
-                                color: primaryTheme['homeTextBlack'],
-                                fontSize: 32,
-                                fontWeight: FontWeight.w500,
-                              ),
-                            ),
-                          ],
-                        ),
-                        const SizedBox(height: 20),
-                        Text(
-                          'Fast Service and Quick Responsive.',
-                          style: TextStyle(
-                            color: primaryTheme['homeTextBlack'],
-                            fontSize: 24,
-                            fontWeight: FontWeight.normal,
-                          ),
-                        ),
-                        Text(
-                          'Generate timetable within few minutes.',
-                          style: TextStyle(
-                            color: primaryTheme['homeTextBlack'],
-                            fontSize: 24,
-                            fontWeight: FontWeight.normal,
-                          ),
-                        ),
-                      ],
-                    ),
+                  AppFeatureTile(
+                    icon: Icons.check,
+                    title: 'Quick Generate',
+                    description: [
+                      'Fast Service and Quick Responsive.',
+                      'Generate timetable within few minutes.',
+                    ],
                   ),
                 ],
               ),
