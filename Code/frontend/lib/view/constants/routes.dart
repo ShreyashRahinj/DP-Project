@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:frontend/view/components/login_dialog.dart';
+import 'package:frontend/view/screens/auth/auth_gate.dart';
+
 import 'package:frontend/view/screens/home_screen.dart';
 
 const homeScreenRoute = '/home';
-const loginScreenRoute = '/login';
+const authGateRoute = '/auth';
 
 Map<String, WidgetBuilder> routes = {
   homeScreenRoute: (context) => const HomeScreen(),
-  loginScreenRoute: (context) => const LoginDialog(),
+  authGateRoute: (context) => const AuthGate(),
 };

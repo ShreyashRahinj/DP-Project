@@ -1,6 +1,7 @@
 // Imports
 const express = require("express");
 const app = express();
+const cors = require("cors");
 const { Connection } = require("./config/database.js");
 const authRoutes = require("./router/authRoute.js");
 require("dotenv").config();
@@ -10,6 +11,7 @@ const PORT = process.env.PORT;
 
 // Middlewares
 app.use(express.json());
+app.use(cors());
 app.use("/api", authRoutes);
 
 Connection();

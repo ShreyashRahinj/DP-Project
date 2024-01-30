@@ -1,1 +1,1 @@
-enum AuthState { loggedOut, loggedIn, loading }
+enum AuthState { loggedOut, loggedIn, loading, exception }

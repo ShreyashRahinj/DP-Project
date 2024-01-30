@@ -12,7 +12,7 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   void toLoginDialog() {
-    Navigator.pushNamed(context, loginScreenRoute);
+    Navigator.pushNamed(context, authGateRoute);
   }
 
   @override
@@ -46,7 +46,7 @@ class _HomeScreenState extends State<HomeScreen> {
             const SizedBox(width: 16),
             InkWell(
               onTap: () {
-                Navigator.pushNamed(context, loginScreenRoute);
+                Navigator.pushNamed(context, authGateRoute);
               },
               child: const Text(
                 'Sign Up',
