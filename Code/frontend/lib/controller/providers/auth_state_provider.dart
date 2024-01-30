@@ -15,7 +15,7 @@ class AuthStateProvider extends ChangeNotifier {
   }) async {
     authState = AuthState.loading;
     notifyListeners();
-    print('login started');
+
     Map<String, dynamic> res = await ServerAuth.loginUser(
       email: email,
       password: password,
@@ -61,6 +61,8 @@ class AuthStateProvider extends ChangeNotifier {
   }
 
   void changeScreen() {
+    authError = null;
+    authState = AuthState.loggedOut;
     showLoginScreen = !showLoginScreen;
     notifyListeners();
   }

@@ -8,8 +8,9 @@ const login = async (req, res) => {
     );
     if (rows.length == 0) {
       res.status(404).json({ message: "User not found" });
+    } else {
+      res.status(200).json({ user: rows });
     }
-    res.status(200).json({ user: rows });
   } catch (error) {
     res.status(500).json({ message: `${error.message}` });
   }

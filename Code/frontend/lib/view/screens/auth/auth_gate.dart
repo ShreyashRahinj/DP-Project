@@ -13,14 +13,10 @@ class AuthGate extends StatelessWidget {
     return Consumer<AuthStateProvider>(
       builder: (context, value, child) {
         switch (value.authState) {
-          case AuthState.loggedOut:
+          case AuthState.loggedOut || AuthState.exception || AuthState.loading:
             return const LoginOrRegisterScreen();
-          case AuthState.loading:
-            return const CircularProgressIndicator();
           case AuthState.loggedIn:
             return const CreateTimetableScreen();
-          case AuthState.exception:
-            return const CircularProgressIndicator();
         }
       },
     );

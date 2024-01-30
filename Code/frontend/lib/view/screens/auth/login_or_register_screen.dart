@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:frontend/controller/providers/auth_state_provider.dart';
+import 'package:frontend/view/constants/enums.dart';
 import 'package:provider/provider.dart';
 
 import '../../constants/colors.dart';
@@ -37,7 +38,19 @@ class _LoginScreenState extends State<LoginOrRegisterScreen> {
     );
   }
 
-  void onClickRegister() {}
+  void onClickRegister() {
+    String username = usernameController.text;
+    String email = emailController.text;
+    String password = passwordController.text;
+    String confirmPassword = confirmPasswordController.text;
+    if (password == confirmPassword) {
+      Provider.of<AuthStateProvider>(context, listen: false).registerUser(
+        username: username,
+        email: email,
+        password: password,
+      );
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -114,7 +127,17 @@ class _LoginScreenState extends State<LoginOrRegisterScreen> {
                     ),
                   ],
                 ),
-                const SizedBox(height: 40),
+                const SizedBox(height: 20),
+                value.authState == AuthState.exception
+                    ? Text(
+                        value.authError!,
+                        style: const TextStyle(
+                          color: PrimaryTheme.errorText,
+                          fontSize: 16,
+                        ),
+                      )
+                    : Container(),
+                const SizedBox(height: 20),
                 Visibility(
                   visible: !value.showLoginScreen,
                   child: CustomTextField(
@@ -146,10 +169,17 @@ class _LoginScreenState extends State<LoginOrRegisterScreen> {
                   ),
                 ),
                 const SizedBox(height: 40),
-                CustomButton(
-                  buttonText: value.showLoginScreen ? 'Login' : 'Register',
-                  onTap: value.showLoginScreen ? onClickLogin : onClickRegister,
-                ),
+                value.authState == AuthState.loading
+                    ? const Center(
+                        child: CircularProgressIndicator(),
+                      )
+                    : CustomButton(
+                        buttonText:
+                            value.showLoginScreen ? 'Login' : 'Register',
+                        onTap: value.showLoginScreen
+                            ? onClickLogin
+                            : onClickRegister,
+                      ),
                 const SizedBox(height: 20),
               ],
             ),
