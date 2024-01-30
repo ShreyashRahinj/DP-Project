@@ -6,7 +6,6 @@ const register = async (req, res) => {
       "SELECT * FROM users WHERE username=($1) OR email=($2)",
       [username, email]
     );
-    console.log(rows);
     if (rows.length == 0) {
       const { rows } = await query.query(
         "INSERT INTO users (username, email, password) VALUES ($1, $2, $3)",
