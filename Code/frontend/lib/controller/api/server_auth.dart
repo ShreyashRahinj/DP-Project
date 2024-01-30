@@ -26,7 +26,7 @@ class ServerAuth {
           },
         ),
       );
-      if (res.statusCode == 200) {
+      if (res.statusCode == 201) {
         map = await loginUser(
           email: email,
           password: password,

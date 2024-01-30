@@ -39,16 +39,21 @@ class _LoginScreenState extends State<LoginOrRegisterScreen> {
   }
 
   void onClickRegister() {
+    final provider = Provider.of<AuthStateProvider>(context, listen: false);
     String username = usernameController.text;
     String email = emailController.text;
     String password = passwordController.text;
     String confirmPassword = confirmPasswordController.text;
     if (password == confirmPassword) {
-      Provider.of<AuthStateProvider>(context, listen: false).registerUser(
+      provider.registerUser(
         username: username,
         email: email,
         password: password,
       );
+    } else {
+      provider.authState = AuthState.exception;
+      provider.authError = "Passwords do not match";
+      setState(() {});
     }
   }
 
