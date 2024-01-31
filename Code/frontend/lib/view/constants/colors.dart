@@ -11,5 +11,6 @@ class PrimaryTheme {
   static const homeAboutGd2 = Color.fromRGBO(216, 217, 218, 0);
   static const tabDisable = Color.fromRGBO(97, 103, 122, 1);
   static const tabEnable = Color.fromRGBO(73, 213, 95, 1);
+  static const inputFieldComponentBg = Color.fromRGBO(255, 239, 200,1);
   static const errorText = Colors.red;
 }

@@ -12,7 +12,7 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   void toLoginDialog() {
-    Navigator.pushNamed(context, authGateRoute);
+    Navigator.pushNamed(context, createTimetableScreenRoute);
   }
 
   @override
