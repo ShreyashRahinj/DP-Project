@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:frontend/view/constants/colors.dart';
 
-class InputComponents extends StatelessWidget {
+class ResourcesComponents extends StatelessWidget {
   final String title;
   final List<String> arr;
   final Function() onTap;
 
-  const InputComponents({
+  const ResourcesComponents({
     super.key,
     required this.title,
     required this.arr,

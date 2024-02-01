@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:frontend/view/components/input_components.dart';
+import 'package:frontend/view/components/resources_component.dart';
 import 'package:frontend/view/constants/colors.dart';
 import 'package:frontend/view/constants/routes.dart';
 
@@ -60,12 +60,11 @@ class CreateTimetableScreen extends StatelessWidget {
             child: SizedBox(
               height: MediaQuery.sizeOf(context).height * 0.3,
               child: ListView.builder(
-                // physics: const AlwaysScrollableScrollPhysics(),
                 shrinkWrap: true,
                 scrollDirection: Axis.horizontal,
                 itemCount: 12,
                 itemBuilder: (context, index) {
-                  return InputComponents(
+                  return ResourcesComponents(
                     title: 'Hello',
                     arr: const ['teacher', 'hello'],
                     onTap: () {},
