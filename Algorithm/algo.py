@@ -10,24 +10,41 @@ TOURNAMENT_SELECTION_SIZE = 3
 
 # Initial data which has been hard-coded
 class Data:
-    ROOMS = [['R1', 25], ['R2', 45], ['R3', 35]]
+    ROOMS = [['R1', 25], ['R2', 45], ['R3', 35], ['R4', 30], ['R5', 30], ['R6', 30]]
+
     TEACHERS = [['T1', 'Prema Kadam'],
                 ['T2', 'Santosh Kumar'],
                 ['T3', 'Varsha Jadhav'],
                 ['T4', 'Vivek Patil']]
-    MEETINGTIMES = [['M1', 'MWF 09:00 - 10:00'],
-                    ['M2', 'MWF 10:00 - 11:00'],
-                    ['M3', 'TTH 09:00 - 10:30'],
-                    ['M4', 'TTH 10:30 - 12:00']]
-    SUBJECTS = [['S1', 'Calculus', 25],
-                ['S2', 'Algebra', 35],
-                ['S3', 'Probablity and Statistics', 25],
-                ['S4', 'Data Structures', 30],
-                ['S5', 'Operating System', 35],
-                ['S6', 'Computer Networks', 45],
-                ['S7', 'Machine Learning', 45]]
 
-    DEPTS = ['AI&DS', 'Comp', 'IT']
+    MEETINGTIMES = [['M-1', 'M 09:00 - 10:00'],
+                    ['M-2', 'M 10:00 - 11:00'],
+                    ['M-3', 'M 11:00 - 12:00'],
+                    ['M-4', 'M 1:00 - 2:00'],
+                    ['M-5', 'T 09:00 - 10:00'],
+                    ['M-6', 'T 10:00 - 11:00'],
+                    ['M-7', 'T 11:00 - 12:00'],
+                    ['M-8', 'T 1:00 - 2:00'],
+                    ['M-9', 'W 09:00 - 10:00'],
+                    ['M-10', 'W 10:00 - 11:00'],
+                    ['M-11', 'W 11:00 - 12:00'],
+                    ['M-12', 'W 1:00 - 2:00'],
+                    ['M-13', 'TH 09:00 - 10:00'],
+                    ['M-14', 'TH 10:00 - 11:00'],
+                    ['M-15', 'TH 11:00 - 12:00'],
+                    ['M-16', 'TH 1:00 - 2:00'],
+                    ['M-17', 'F 09:00 - 10:00'],
+                    ['M-18', 'F 10:00 - 11:00'],
+                    ['M-19', 'F 11:00 - 12:00'],
+                    ['M-20', 'F 1:00 - 2:00']]
+
+    SUBJECTS = [['S1', 'Artificial Intelligence', 25],
+                ['S2', 'Probablity and Statistics', 25],
+                ['S3', 'Data Structures', 30],
+                ['S4', 'Operating System', 35],
+                ['S5', 'Machine Learning', 45]]
+
+    DIVISIONS = ['A', 'B', 'C']
 
     def __init__(self):
         self._rooms = []
@@ -43,23 +60,21 @@ class Data:
         for i in range(len(self.TEACHERS)):
             self._teachers.append(Teacher(self.TEACHERS[i][0], self.TEACHERS[i][1]))
 
-        sub1 = Subject('S1', 'Artificial Intelligence', [self._teachers[0], self._teachers[1]], 25)
-        sub2 = Subject('S2', 'TOC', [self._teachers[0], self._teachers[1], self._teachers[2]], 35)
-        sub3 = Subject('S3', 'Cloud Computing', [self._teachers[0], self._teachers[1]], 25)
-        sub4 = Subject('S4', 'Data Structures', [self._teachers[2], self._teachers[3]], 30)
-        sub5 = Subject('S5', 'Operating System', [self._teachers[3]], 35)
-        sub6 = Subject('S6', 'Computer Networks', [self._teachers[0], self._teachers[2]], 45)
-        sub7 = Subject('S7', 'Human Values', [self._teachers[1], self._teachers[3]], 45)
-        self._subjects = [sub1, sub2, sub3, sub4, sub5, sub6, sub7]
+        sub1 = Subject('S1', 'Artificial Intelligence', [self._teachers[0], self._teachers[1]], 25, 3)
+        sub2 = Subject('S2', 'Probablity&Statistics', [self._teachers[0], self._teachers[1], self._teachers[2]], 25, 3)
+        sub3 = Subject('S3', 'Data Structures', [self._teachers[2], self._teachers[3]], 30, 3)
+        sub4 = Subject('S4', 'Operating System', [self._teachers[3]], 35, 3)
+        sub5 = Subject('S5', 'Machine Learning', [self._teachers[0], self._teachers[2]], 45, 3)
+        self._subjects = [sub1, sub2, sub3, sub4, sub5]
 
-        dept1 = Department('AI&DS', [sub1, sub3])
-        dept2 = Department('Comp', [sub2, sub4, sub5])
-        dept3 = Department('IT', [sub6, sub7])
-        self._depts = [dept1, dept2, dept3]
+        div1 = Division('A', self._subjects)
+        div2 = Division('B', self._subjects)
+        div3 = Division('C', self._subjects)
+        self._divs = [div1, div2, div3]
 
         self._numOfClasses = 0
-        for i in range(len(self._depts)):
-            self._numOfClasses += len(self._depts[i].get_subjects())
+        for i in range(len(self._divs)):
+            self._numOfClasses += len(self._divs[i].get_subjects())
 
     def get_rooms(self):
         return self._rooms
@@ -73,8 +88,8 @@ class Data:
     def get_subjects(self):
         return self._subjects
 
-    def get_depts(self):
-        return self._depts
+    def get_divs(self):
+        return self._divs
 
     def get_numOfClasses(self):
         return self._numOfClasses
@@ -82,11 +97,12 @@ class Data:
 
 # Classes for defining the differents components that are required for a Scheduled Class
 class Subject:
-    def __init__(self, id, name, teachers, maxNumOfStudents):
+    def __init__(self, id, name, teachers, maxNumOfStudents, num=1):
         self._id = id
         self._name = name
         self._teachers = teachers
         self._maxNumOfStudents = maxNumOfStudents
+        self._numOfLectures = num
 
     def get_id(self): return self._id
 
@@ -96,10 +112,12 @@ class Subject:
 
     def get_maxNumOfStudents(self): return self._maxNumOfStudents
 
+    def get_numOfLectures(self): return self._numOfLectures
+
     def __str__(self): return self._name
 
 
-class Department:
+class Division:
     def __init__(self, name, subjects):
         self._name = name
         self._subjects = subjects
@@ -139,11 +157,11 @@ class Room:
     def get_seatingCapacity(self): return self._seatingCapacity
 
 
-# A class consists of a dept,subject,teacher,room,meeting time
+# A class consists of a div,subject,teacher,room,meeting time
 class Class:
-    def __init__(self, id, dept, subject):
+    def __init__(self, id, div, subject):
         self._id = id
-        self._dept = dept
+        self._div = div
         self._subject = subject
         self._teacher = None
         self._room = None
@@ -151,7 +169,7 @@ class Class:
 
     def get_id(self): return self._id
 
-    def get_dept(self): return self._dept
+    def get_div(self): return self._div
 
     def get_subject(self): return self._subject
 
@@ -168,7 +186,7 @@ class Class:
     def set_meetingTime(self, meetingTime): self._meetingTime = meetingTime
 
     def __str__(self):
-        return f'{self._dept.get_name()},{self._subject.get_id()},{self._room.get_number()},{self._teacher.get_id()},{self._meetingTime.get_id()}'
+        return f'{self._div.get_name()},{self._subject.get_id()},{self._room.get_number()},{self._teacher.get_id()},{self._meetingTime.get_id()}'
 
 
 # Multiple randomly generated classes form a schedule
@@ -195,17 +213,18 @@ class Schedule:
         return self._fitness
 
     def initialize(self):
-        depts = self._data.get_depts()
-        for i in range(len(depts)):
-            subjects = depts[i].get_subjects()
+        divs = self._data.get_divs()
+        for i in range(len(divs)):
+            subjects = divs[i].get_subjects()
             for j in range(len(subjects)):
-                newClass = Class(self._classNum, depts[i], subjects[j])
-                self._classNum += 1
-                newClass.set_room(self._data.get_rooms()[randrange(0, len(self._data.get_rooms()))])
-                newClass.set_meetingTime(
-                    self._data.get_meetingTimes()[randrange(0, len(self._data.get_meetingTimes()))])
-                newClass.set_teacher(subjects[j].get_teachers()[randrange(0, len(subjects[j].get_teachers()))])
-                self._classes.append(newClass)
+                for k in range(subjects[j].get_numOfLectures()):
+                    newClass = Class(self._classNum, divs[i], subjects[j])
+                    self._classNum += 1
+                    newClass.set_room(self._data.get_rooms()[randrange(0, len(self._data.get_rooms()))])
+                    newClass.set_meetingTime(
+                        self._data.get_meetingTimes()[randrange(0, len(self._data.get_meetingTimes()))])
+                    newClass.set_teacher(subjects[j].get_teachers()[randrange(0, len(subjects[j].get_teachers()))])
+                    self._classes.append(newClass)
 
         return self
 
@@ -214,16 +233,20 @@ class Schedule:
         classes = self.get_classes()
 
         for i in range(len(classes)):
-            if classes[i].get_room().get_seatingCapacity() < classes[i].get_subject().get_maxNumOfStudents():
-                self._numOfConflicts += 1
+            # if classes[i].get_room().get_seatingCapacity() < classes[i].get_subject().get_maxNumOfStudents():
+            #     self._numOfConflicts += 1
 
             for j in range(i + 1, len(classes)):
                 if classes[i].get_meetingTime().get_id() == classes[j].get_meetingTime().get_id():
-                    if classes[i].get_dept() == classes[j].get_dept():
-                        self._numOfConflicts += 1
+                    # Basic Constraints
                     if classes[i].get_room().get_number() == classes[j].get_room().get_number():
                         self._numOfConflicts += 1
                     if classes[i].get_teacher().get_id() == classes[j].get_teacher().get_id():
+                        self._numOfConflicts += 1
+
+                    # The same div gets allotted the same meeting time for 2 different classes
+                    # (which may have the same subject as well)
+                    if classes[i].get_div() == classes[j].get_div():
                         self._numOfConflicts += 1
 
         return 1 / (1.0 * self._numOfConflicts + 1)
@@ -253,24 +276,24 @@ class Population:
 class DisplayMgr:
     def print_available_data(self):
         print('All Available Data ->')
-        self.print_dept()
+        self.print_div()
         self.print_subjects()
         self.print_rooms()
         self.print_teachers()
         self.print_meeting_times()
 
-    def print_dept(self):
+    def print_div(self):
         print('Departments:')
-        depts = data.get_depts()
-        deptsTable = PrettyTable(['Dept', 'Subjects'])
-        for i in range(len(depts)):
-            subjects = depts[i].get_subjects()
+        divs = data.get_divs()
+        divsTable = PrettyTable(['Div', 'Subjects'])
+        for i in range(len(divs)):
+            subjects = divs[i].get_subjects()
             subjectsStr = ''
             for j in range(len(subjects) - 1):
                 subjectsStr += f'{str(subjects[j])}, '
             subjectsStr += str(subjects[len(subjects) - 1])
-            deptsTable.add_row([depts[i].get_name(), subjectsStr])
-        print(deptsTable)
+            divsTable.add_row([divs[i].get_name(), subjectsStr])
+        print(divsTable)
 
     def print_subjects(self):
         print('Subjects:')
@@ -312,7 +335,7 @@ class DisplayMgr:
 
     def print_generation(self, population):
         generationTable = PrettyTable(
-            ['Schedule No.', 'Fitness', 'No of Conflicts', 'Classes(dept,sub,room,teacher,meeting-time)'])
+            ['Schedule No.', 'Fitness', 'No of Conflicts', 'Classes(div,sub,room,teacher,meeting-time)'])
         schedules = population.get_schedules()
         for i in range(len(schedules)):
             classes = schedules[i].get_classes()
@@ -326,10 +349,10 @@ class DisplayMgr:
     def print_schedule_as_table(self, schedule):
         classes = schedule.get_classes()
         scheduleTable = PrettyTable(
-            ['Class', 'Dept', 'Subject(Id,Max No of Students)', 'Room(Capacity)', 'Teacher(Id)', 'Meeting Time(Id)'])
+            ['Class', 'div', 'Subject(Id,Max No of Students)', 'Room(Capacity)', 'Teacher(Id)', 'Meeting Time(Id)'])
         for i in range(len(classes)):
             scheduleTable.add_row([classes[i].get_id(),
-                                   classes[i].get_dept().get_name(),
+                                   classes[i].get_div().get_name(),
                                    f'{classes[i].get_subject().get_name()} ({classes[i].get_subject().get_id()}, {classes[i].get_subject().get_maxNumOfStudents()})',
                                    f'{classes[i].get_room().get_number()} ({classes[i].get_room().get_seatingCapacity()})',
                                    f'{classes[i].get_teacher().get_name()} ({classes[i].get_teacher().get_id()})',
