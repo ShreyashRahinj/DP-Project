@@ -7,7 +7,6 @@ NUM_OF_ELITE_SCHEDULES = 1
 MUTATION_RATE = 0.1
 TOURNAMENT_SELECTION_SIZE = 3
 
-
 # Initial data which has been hard-coded
 class Data:
     ROOMS = [['R1', 25], ['R2', 45], ['R3', 35], ['R4', 30], ['R5', 30], ['R6', 30]]
