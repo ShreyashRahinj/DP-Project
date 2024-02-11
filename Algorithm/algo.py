@@ -9,12 +9,18 @@ TOURNAMENT_SELECTION_SIZE = 3
 
 # Initial data which has been hard-coded
 class Data:
-    ROOMS = [['R1', 25], ['R2', 45], ['R3', 35], ['R4', 30], ['R5', 30], ['R6', 30]]
+    ROOMS = [['D201', 85], ['D203', 85], ['D204', 85], ['D301', 85], ['D303', 85], ['D304', 85]]
 
-    TEACHERS = [['T1', 'Prema Kadam'],
-                ['T2', 'Santosh Kumar'],
+    TEACHERS = [['T1', 'Vivek Patil'],
+                ['T2', 'Gitanjali Yadav'],
                 ['T3', 'Varsha Jadhav'],
-                ['T4', 'Vivek Patil']]
+                ['T4', 'Survana Bhagwat'],
+                ['T5', 'Santosh Kumar'],
+                ['T6', 'Vijaykumar Ghule'],
+                ['T7', 'Renu Kachoria'],
+                ['T8', 'Parikshit Mahalle'],
+                ['T9', 'Pranjali Jadhav'],
+                ['T10', 'Vishal Meshram']]
 
     MEETINGTIMES = [['M-1', 'M 09:00 - 10:00'],
                     ['M-2', 'M 10:00 - 11:00'],
@@ -37,11 +43,11 @@ class Data:
                     ['M-19', 'F 11:00 - 12:00'],
                     ['M-20', 'F 1:00 - 2:00']]
 
-    SUBJECTS = [['S1', 'Artificial Intelligence', 25],
-                ['S2', 'Probablity and Statistics', 25],
-                ['S3', 'Data Structures', 30],
-                ['S4', 'Operating System', 35],
-                ['S5', 'Machine Learning', 45]]
+    SUBJECTS = [['S1', 'Artificial Intelligence', 80],
+                ['S2', 'Probablity and Statistics', 80],
+                ['S3', 'Data Structures', 80],
+                ['S4', 'Operating System', 80],
+                ['S5', 'Cloud Computing', 80]]
 
     DIVISIONS = ['A', 'B', 'C']
 
@@ -59,16 +65,21 @@ class Data:
         for i in range(len(self.TEACHERS)):
             self._teachers.append(Teacher(self.TEACHERS[i][0], self.TEACHERS[i][1]))
 
-        sub1 = Subject('S1', 'Artificial Intelligence', [self._teachers[0], self._teachers[1]], 25, 3)
-        sub2 = Subject('S2', 'Probablity&Statistics', [self._teachers[0], self._teachers[1], self._teachers[2]], 25, 3)
-        sub3 = Subject('S3', 'Data Structures', [self._teachers[2], self._teachers[3]], 30, 3)
-        sub4 = Subject('S4', 'Operating System', [self._teachers[3]], 35, 3)
-        sub5 = Subject('S5', 'Machine Learning', [self._teachers[0], self._teachers[2]], 45, 3)
+        sub1 = Subject('S1', 'Artificial Intelligence', [self._teachers[0], self._teachers[1]], 80, 3)
+        sub2 = Subject('S2', 'Probablity&Statistics', [self._teachers[0], self._teachers[1], self._teachers[2]], 80, 3)
+        sub3 = Subject('S3', 'Data Structures', [self._teachers[2], self._teachers[3]], 80, 3)
+        sub4 = Subject('S4', 'Operating System', [self._teachers[3]], 80, 3)
+        sub5 = Subject('S5', 'Cloud Computing', [self._teachers[0], self._teachers[2]], 80, 3)
         self._subjects = [sub1, sub2, sub3, sub4, sub5]
 
-        div1 = Division('A', self._subjects)
-        div2 = Division('B', self._subjects)
-        div3 = Division('C', self._subjects)
+        # div1 = Division('A', self._subjects,[self._teachers[i] for i in range(5)])
+        # div2 = Division('B', self._subjects,[self._teachers[i] for i in range(5,10)])
+        # div3 = Division('C', self._subjects,[self._teachers[i] for i in range(10,15)])
+
+        div1 = Division('A', self._subjects, [self._teachers[0],self._teachers[1],self._teachers[2],self._teachers[3],self._teachers[4]])
+        div2 = Division('B', self._subjects, [self._teachers[0],self._teachers[6],self._teachers[7],self._teachers[8],self._teachers[4]])
+        div3 = Division('C', self._subjects, [self._teachers[5],self._teachers[6],self._teachers[2],self._teachers[8],self._teachers[9]])
+
         self._divs = [div1, div2, div3]
 
         self._numOfClasses = 0
@@ -94,7 +105,7 @@ class Data:
         return self._numOfClasses
 
 
-# Classes for defining the differents components that are required for a Scheduled Class
+# Classes for defining the different components that are required for a Scheduled Class
 class Subject:
     def __init__(self, id, name, teachers, maxNumOfStudents, num=1):
         self._id = id
@@ -117,13 +128,16 @@ class Subject:
 
 
 class Division:
-    def __init__(self, name, subjects):
+    def __init__(self, name, subjects, teachers):
         self._name = name
         self._subjects = subjects
+        self._teachers = teachers
 
     def get_name(self): return self._name
 
     def get_subjects(self): return self._subjects
+
+    def get_teachers(self): return self._teachers
 
 
 class Teacher:
@@ -222,7 +236,7 @@ class Schedule:
                     newClass.set_room(self._data.get_rooms()[randrange(0, len(self._data.get_rooms()))])
                     newClass.set_meetingTime(
                         self._data.get_meetingTimes()[randrange(0, len(self._data.get_meetingTimes()))])
-                    newClass.set_teacher(subjects[j].get_teachers()[randrange(0, len(subjects[j].get_teachers()))])
+                    newClass.set_teacher(divs[i].get_teachers()[j])
                     self._classes.append(newClass)
 
         return self
