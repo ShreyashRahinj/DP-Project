@@ -128,6 +128,9 @@ class LectureSlotForm extends StatelessWidget {
           ),
         ),
         InkWell(
+          onTap: () {
+            Navigator.pop(context);
+          },
           child: Container(
             padding: const EdgeInsets.all(8),
             decoration: BoxDecoration(
