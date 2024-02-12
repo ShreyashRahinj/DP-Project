@@ -1,31 +1,51 @@
 from django.db import models
 
-class Department(models.Model):
-    name = models.CharField(max_length = 128)
-
-class RoomCategory(models.Model):
-    name = models.CharField(max_length = 64,unique=True,primary_key=True)
-    max_capacity = models.IntegerField()
+# class RoomCategory(models.Model):
+#     name = models.CharField(max_length = 64,unique=True,primary_key=True)
+#     max_capacity = models.IntegerField()
 
 class Room(models.Model):
     room_id = models.CharField(max_length = 64,unique=True,primary_key=True)
-    category = models.ForeignKey(RoomCategory,on_delete=models.CASCADE)
-    department = models.ForeignKey(Department,on_delete=models.CASCADE)
+    max_capacity = models.IntegerField()
 
+    def __str__(self):
+        return self.room_id
+    
+class LectureSlot(models.Model):
+    id = models.CharField(max_length=64,unique=True,primary_key=True)
+    day = models.CharField(max_length = 32)
+    startTime = models.TimeField()
+    endTime = models.TimeField()
+
+    def __str__(self):
+        return f"{self.day} {self.startTime} - {self.endTime}"
+
+class Teacher(models.Model):
+    id = models.CharField(max_length=64,unique=True,primary_key=True)
+    name = models.CharField(max_length=256)
     def __str__(self):
         return self.name
 
 class Course(models.Model):
     course_id = models.CharField(max_length = 64,unique=True,primary_key=True)
     name = models.CharField(max_length = 128)
-    department = models.ForeignKey(Department,on_delete=models.CASCADE)
-    category = models.ForeignKey(RoomCategory,on_delete=models.CASCADE)
+    lectures = models.IntegerField()
+    capacity = models.IntegerField()
 
-class Teacher(models.Model):
-    name = models.CharField(max_length=256)
-    department = models.ForeignKey(Department,on_delete=models.CASCADE)
-    courses = models.ManyToManyField(Course,related_name="courses", blank=True)
+    def __str__(self):
+        return self.name
 
-class LectureSlot(models.Model):
-    startTime = models.TimeField()
-    endTime = models.TimeField()
+class Division(models.Model):
+    name = models.CharField(max_length = 32)
+    teacher = models.ForeignKey(Teacher,on_delete=models.CASCADE)
+    course = models.ForeignKey(Course,on_delete=models.CASCADE)
+
+    def __str__(self):
+        return self.name
+
+class Class(models.Model):
+    division = models.ForeignKey(Division,on_delete=models.CASCADE)
+    course = models.ForeignKey(Course,on_delete=models.CASCADE)
+    teacher = models.ForeignKey(Teacher,on_delete=models.CASCADE)
+    room = models.ForeignKey(Room,on_delete=models.CASCADE)
+    slot = models.ForeignKey(LectureSlot,on_delete=models.CASCADE)
