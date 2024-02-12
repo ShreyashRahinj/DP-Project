@@ -433,22 +433,22 @@ class GeneticAlgorithm:
 data = Data()
 displayMgr = DisplayMgr()
 displayMgr.print_available_data()
-# gen = 0
-# print(f'Generation: {gen}')
-# population = Population(POPULATION_SIZE)
-# population.get_schedules().sort(key=lambda s: s.get_fitness(), reverse=True)
-# displayMgr.print_generation(population)
-# displayMgr.print_schedule_as_table(population.get_schedules()[0])
+gen = 0
+print(f'Generation: {gen}')
+population = Population(POPULATION_SIZE)
+population.get_schedules().sort(key=lambda s: s.get_fitness(), reverse=True)
+displayMgr.print_generation(population)
+displayMgr.print_schedule_as_table(population.get_schedules()[0])
 
-# start = perf_counter()
-# while population.get_schedules()[0].get_fitness() != 1.0:
-#     gen += 1
-#     print(f'Generation: {gen}')
-#     population = GeneticAlgorithm().evolve(population)
-#     population.get_schedules().sort(key=lambda s: s.get_fitness(), reverse=True)
-#     displayMgr.print_generation(population)
-#     displayMgr.print_schedule_as_table(population.get_schedules()[0])
-#     print()
+start = perf_counter()
+while population.get_schedules()[0].get_fitness() != 1.0:
+    gen += 1
+    print(f'Generation: {gen}')
+    population = GeneticAlgorithm().evolve(population)
+    population.get_schedules().sort(key=lambda s: s.get_fitness(), reverse=True)
+    displayMgr.print_generation(population)
+    displayMgr.print_schedule_as_table(population.get_schedules()[0])
+    print()
 
-# end = perf_counter()
-# print(f'Time taken: {end - start}')
+end = perf_counter()
+print(f'Time taken: {end - start}')

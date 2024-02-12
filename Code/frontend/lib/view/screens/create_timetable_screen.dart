@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:frontend/view/components/lecture_slot_form.dart';
 import 'package:frontend/view/components/resources_component.dart';
 import 'package:frontend/view/constants/colors.dart';
+import 'package:frontend/view/constants/resources.dart';
 import 'package:frontend/view/constants/routes.dart';
 
 class CreateTimetableScreen extends StatelessWidget {
@@ -14,7 +16,7 @@ class CreateTimetableScreen extends StatelessWidget {
         preferredSize: const Size(double.infinity, 40),
         child: AppBar(
           backgroundColor: PrimaryTheme.appBarBg,
-          leadingWidth: MediaQuery.sizeOf(context).width / 4,
+          foregroundColor: PrimaryTheme.appWhite,
           title: InkWell(
             onTap: () {},
             child: const Text(
@@ -62,12 +64,18 @@ class CreateTimetableScreen extends StatelessWidget {
               child: ListView.builder(
                 shrinkWrap: true,
                 scrollDirection: Axis.horizontal,
-                itemCount: 12,
+                itemCount: resourcesList.length,
                 itemBuilder: (context, index) {
                   return ResourcesComponents(
-                    title: 'Hello',
-                    arr: const ['teacher', 'hello'],
-                    onTap: () {},
+                    title: resourcesList[index]['title'] as String,
+                    arr: resourcesList[index]['fields'] as List<String>,
+                    onTap: () {
+                      showDialog(
+                        barrierDismissible: false,
+                        context: context,
+                        builder: (context) => const LectureSlotForm(),
+                      );
+                    },
                   );
                 },
               ),
