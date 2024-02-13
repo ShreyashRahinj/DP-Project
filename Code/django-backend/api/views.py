@@ -24,6 +24,13 @@ class CreateListDivisionView(generics.ListCreateAPIView):
     queryset = Division.objects.all()
     serializer_class = DivisionSerializer
 
+    def perform_create(self, serializer):
+        print(self.request.data)
+        queryset = Division.objects.filter(name=self.request.data['name'],teacher=self.request.data['teacher'],course=self.request.data['course'])
+        if queryset.exists():
+            raise FileExistsError("Already Occupied")
+        return super().perform_create(serializer)
+
 create_list_lecture_slot_view = CreateListLectureSlotView.as_view()
 create_list_room_view = CreateListRoomView.as_view()
 create_list_teacher_view = CreateListTeacherView.as_view()
