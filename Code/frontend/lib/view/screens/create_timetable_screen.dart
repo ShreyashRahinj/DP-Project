@@ -1,10 +1,56 @@
 import 'package:flutter/material.dart';
+import 'package:frontend/view/components/forms/course_form.dart';
+import 'package:frontend/view/components/forms/division_form.dart';
+import 'package:frontend/view/components/forms/lecture_slot_form.dart';
+import 'package:frontend/view/components/forms/room_form.dart';
+import 'package:frontend/view/components/forms/teacher_form.dart';
 import 'package:frontend/view/components/resources_component.dart';
 import 'package:frontend/view/constants/colors.dart';
+import 'package:frontend/view/constants/resources.dart';
 import 'package:frontend/view/constants/routes.dart';
 
-class CreateTimetableScreen extends StatelessWidget {
+class CreateTimetableScreen extends StatefulWidget {
   const CreateTimetableScreen({super.key});
+
+  @override
+  State<CreateTimetableScreen> createState() => _CreateTimetableScreenState();
+}
+
+class _CreateTimetableScreenState extends State<CreateTimetableScreen> {
+  onClickAdd(int index) {
+    switch (index) {
+      case 0:
+        showDialog(
+          barrierDismissible: false,
+          context: context,
+          builder: (context) => const RoomForm(),
+        );
+      case 1:
+        showDialog(
+          barrierDismissible: false,
+          context: context,
+          builder: (context) => const LectureSlotForm(),
+        );
+      case 2:
+        showDialog(
+          barrierDismissible: false,
+          context: context,
+          builder: (context) => const TeacherForm(),
+        );
+      case 3:
+        showDialog(
+          barrierDismissible: false,
+          context: context,
+          builder: (context) => const CourseForm(),
+        );
+      case 4:
+        showDialog(
+          barrierDismissible: false,
+          context: context,
+          builder: (context) => const DivisionForm(),
+        );
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -14,7 +60,7 @@ class CreateTimetableScreen extends StatelessWidget {
         preferredSize: const Size(double.infinity, 40),
         child: AppBar(
           backgroundColor: PrimaryTheme.appBarBg,
-          leadingWidth: MediaQuery.sizeOf(context).width / 4,
+          foregroundColor: PrimaryTheme.appWhite,
           title: InkWell(
             onTap: () {},
             child: const Text(
@@ -62,12 +108,12 @@ class CreateTimetableScreen extends StatelessWidget {
               child: ListView.builder(
                 shrinkWrap: true,
                 scrollDirection: Axis.horizontal,
-                itemCount: 12,
+                itemCount: resourcesList.length,
                 itemBuilder: (context, index) {
                   return ResourcesComponents(
-                    title: 'Hello',
-                    arr: const ['teacher', 'hello'],
-                    onTap: () {},
+                    title: resourcesList[index]['title'] as String,
+                    arr: resourcesList[index]['fields'] as List<String>,
+                    onTap: () => onClickAdd(index),
                   );
                 },
               ),

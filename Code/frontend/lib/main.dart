@@ -1,6 +1,7 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:frontend/controller/providers/auth_state_provider.dart';
+import 'package:frontend/controller/providers/resources_data_provider.dart';
 import 'package:frontend/view/constants/routes.dart';
 import 'package:provider/provider.dart';
 
@@ -17,6 +18,9 @@ class MyApp extends StatelessWidget {
       providers: [
         ChangeNotifierProvider(
           create: (context) => AuthStateProvider(),
+        ),
+        ChangeNotifierProvider(
+          create: (context) => ResourcesDataProvider(),
         ),
       ],
       child: MaterialApp(
