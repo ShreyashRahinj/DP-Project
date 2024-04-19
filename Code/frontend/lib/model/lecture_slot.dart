@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 class LectureSlot {
   final String id;
   final String day;
@@ -10,4 +12,13 @@ class LectureSlot {
     required this.startTime,
     required this.endTime,
   });
+
+  String toJson() {
+    return jsonEncode({
+      "id": id,
+      "day": day,
+      "startTime": startTime,
+      "endTime": endTime,
+    });
+  }
 }
