@@ -4,31 +4,84 @@ import 'package:provider/provider.dart';
 
 import '../../../controller/providers/resources_data_provider.dart';
 
-class RoomForm extends StatefulWidget {
-  const RoomForm({super.key});
+const List<DropdownMenuEntry> teachers = [
+  DropdownMenuEntry(
+    label: "Monday",
+    value: "Monday",
+  ),
+  DropdownMenuEntry(
+    label: "Tuesday",
+    value: "Tuesday",
+  ),
+  DropdownMenuEntry(
+    label: "Wednesday",
+    value: "Wednesday",
+  ),
+  DropdownMenuEntry(
+    label: "Thursday",
+    value: "Thursday",
+  ),
+  DropdownMenuEntry(
+    label: "Friday",
+    value: "Friday",
+  ),
+];
+const List<DropdownMenuEntry> courses = [
+  DropdownMenuEntry(
+    label: "Monday",
+    value: "Monday",
+  ),
+  DropdownMenuEntry(
+    label: "Tuesday",
+    value: "Tuesday",
+  ),
+  DropdownMenuEntry(
+    label: "Wednesday",
+    value: "Wednesday",
+  ),
+  DropdownMenuEntry(
+    label: "Thursday",
+    value: "Thursday",
+  ),
+  DropdownMenuEntry(
+    label: "Friday",
+    value: "Friday",
+  ),
+];
+
+class DivisionForm extends StatefulWidget {
+  const DivisionForm({super.key});
 
   @override
-  State<RoomForm> createState() => _RoomFormState();
+  State<DivisionForm> createState() => _DivisionFormState();
 }
 
-class _RoomFormState extends State<RoomForm> {
+class _DivisionFormState extends State<DivisionForm> {
   late final TextEditingController idController;
+  late final TextEditingController nameController;
+  late final TextEditingController lectureController;
   late final TextEditingController capacityController;
 
   @override
   void initState() {
     super.initState();
     idController = TextEditingController();
+    nameController = TextEditingController();
+    lectureController = TextEditingController();
     capacityController = TextEditingController();
   }
 
   void save() {
     final provider = Provider.of<ResourcesDataProvider>(context, listen: false);
-    provider.addRoom(
+    provider.addCourse(
       id: idController.text,
+      name: nameController.text,
+      lectureNo: int.parse(lectureController.text),
       capacity: int.parse(capacityController.text),
     );
     idController.clear();
+    nameController.clear();
+    lectureController.clear();
     capacityController.clear();
   }
 
@@ -48,6 +101,8 @@ class _RoomFormState extends State<RoomForm> {
   @override
   void dispose() {
     idController.dispose();
+    nameController.dispose();
+    lectureController.dispose();
     capacityController.dispose();
     super.dispose();
   }
@@ -56,41 +111,55 @@ class _RoomFormState extends State<RoomForm> {
   Widget build(BuildContext context) {
     return AlertDialog(
       backgroundColor: PrimaryTheme.appWhite,
-      title: const Text("Room Details"),
+      title: const Text("Division"),
       shape: const LinearBorder(),
       content: Form(
         child: Container(
           padding: const EdgeInsets.all(24),
-          child: Column(
+          child: const Column(
             mainAxisSize: MainAxisSize.min,
             children: [
               Row(
                 children: [
-                  const Expanded(
+                  Expanded(
                     flex: 1,
-                    child: Text("Room-ID"),
+                    child: Text("Name"),
                   ),
-                  const SizedBox(width: 8),
+                  SizedBox(width: 8),
                   Expanded(
                     flex: 2,
-                    child: TextField(
-                      controller: idController,
+                    child: TextField(),
+                  ),
+                ],
+              ),
+              SizedBox(height: 16),
+              Row(
+                children: [
+                  Expanded(
+                    flex: 1,
+                    child: Text("Teacher"),
+                  ),
+                  SizedBox(width: 8),
+                  Expanded(
+                    flex: 2,
+                    child: DropdownMenu(
+                      dropdownMenuEntries: teachers,
                     ),
                   ),
                 ],
               ),
-              const SizedBox(height: 16),
+              SizedBox(height: 16),
               Row(
                 children: [
-                  const Expanded(
+                  Expanded(
                     flex: 1,
-                    child: Text("Max-Capacity"),
+                    child: Text("Course"),
                   ),
-                  const SizedBox(width: 8),
+                  SizedBox(width: 8),
                   Expanded(
                     flex: 2,
-                    child: TextField(
-                      controller: capacityController,
+                    child: DropdownMenu(
+                      dropdownMenuEntries: courses,
                     ),
                   ),
                 ],
@@ -101,7 +170,6 @@ class _RoomFormState extends State<RoomForm> {
       ),
       actions: [
         InkWell(
-          onTap: onClickSave,
           child: Container(
             padding: const EdgeInsets.all(8),
             decoration: BoxDecoration(
@@ -112,7 +180,6 @@ class _RoomFormState extends State<RoomForm> {
           ),
         ),
         InkWell(
-          onTap: onClickAdd,
           child: Container(
             padding: const EdgeInsets.all(8),
             decoration: BoxDecoration(
@@ -123,7 +190,9 @@ class _RoomFormState extends State<RoomForm> {
           ),
         ),
         InkWell(
-          onTap: onClickCancel,
+          onTap: () {
+            Navigator.pop(context);
+          },
           child: Container(
             padding: const EdgeInsets.all(8),
             decoration: BoxDecoration(

@@ -4,32 +4,32 @@ import 'package:provider/provider.dart';
 
 import '../../../controller/providers/resources_data_provider.dart';
 
-class RoomForm extends StatefulWidget {
-  const RoomForm({super.key});
+class TeacherForm extends StatefulWidget {
+  const TeacherForm({super.key});
 
   @override
-  State<RoomForm> createState() => _RoomFormState();
+  State<TeacherForm> createState() => _TeacherFormState();
 }
 
-class _RoomFormState extends State<RoomForm> {
+class _TeacherFormState extends State<TeacherForm> {
   late final TextEditingController idController;
-  late final TextEditingController capacityController;
+  late final TextEditingController nameController;
 
   @override
   void initState() {
     super.initState();
     idController = TextEditingController();
-    capacityController = TextEditingController();
+    nameController = TextEditingController();
   }
 
   void save() {
     final provider = Provider.of<ResourcesDataProvider>(context, listen: false);
-    provider.addRoom(
+    provider.addTeacher(
       id: idController.text,
-      capacity: int.parse(capacityController.text),
+      name: nameController.text,
     );
     idController.clear();
-    capacityController.clear();
+    nameController.clear();
   }
 
   void onClickSave() {
@@ -48,7 +48,7 @@ class _RoomFormState extends State<RoomForm> {
   @override
   void dispose() {
     idController.dispose();
-    capacityController.dispose();
+    nameController.dispose();
     super.dispose();
   }
 
@@ -56,7 +56,7 @@ class _RoomFormState extends State<RoomForm> {
   Widget build(BuildContext context) {
     return AlertDialog(
       backgroundColor: PrimaryTheme.appWhite,
-      title: const Text("Room Details"),
+      title: const Text("Teacher Details"),
       shape: const LinearBorder(),
       content: Form(
         child: Container(
@@ -68,7 +68,7 @@ class _RoomFormState extends State<RoomForm> {
                 children: [
                   const Expanded(
                     flex: 1,
-                    child: Text("Room-ID"),
+                    child: Text("Teacher-ID"),
                   ),
                   const SizedBox(width: 8),
                   Expanded(
@@ -84,13 +84,13 @@ class _RoomFormState extends State<RoomForm> {
                 children: [
                   const Expanded(
                     flex: 1,
-                    child: Text("Max-Capacity"),
+                    child: Text("Name"),
                   ),
                   const SizedBox(width: 8),
                   Expanded(
                     flex: 2,
                     child: TextField(
-                      controller: capacityController,
+                      controller: nameController,
                     ),
                   ),
                 ],

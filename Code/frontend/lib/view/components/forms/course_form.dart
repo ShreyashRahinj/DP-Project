@@ -1,34 +1,41 @@
 import 'package:flutter/material.dart';
+import 'package:frontend/controller/providers/resources_data_provider.dart';
 import 'package:frontend/view/constants/colors.dart';
 import 'package:provider/provider.dart';
 
-import '../../../controller/providers/resources_data_provider.dart';
-
-class RoomForm extends StatefulWidget {
-  const RoomForm({super.key});
+class CourseForm extends StatefulWidget {
+  const CourseForm({super.key});
 
   @override
-  State<RoomForm> createState() => _RoomFormState();
+  State<CourseForm> createState() => _CourseFormState();
 }
 
-class _RoomFormState extends State<RoomForm> {
+class _CourseFormState extends State<CourseForm> {
   late final TextEditingController idController;
+  late final TextEditingController nameController;
+  late final TextEditingController lectureController;
   late final TextEditingController capacityController;
 
   @override
   void initState() {
     super.initState();
     idController = TextEditingController();
+    nameController = TextEditingController();
+    lectureController = TextEditingController();
     capacityController = TextEditingController();
   }
 
   void save() {
     final provider = Provider.of<ResourcesDataProvider>(context, listen: false);
-    provider.addRoom(
+    provider.addCourse(
       id: idController.text,
+      name: nameController.text,
+      lectureNo: int.parse(lectureController.text),
       capacity: int.parse(capacityController.text),
     );
     idController.clear();
+    nameController.clear();
+    lectureController.clear();
     capacityController.clear();
   }
 
@@ -48,6 +55,8 @@ class _RoomFormState extends State<RoomForm> {
   @override
   void dispose() {
     idController.dispose();
+    nameController.dispose();
+    lectureController.dispose();
     capacityController.dispose();
     super.dispose();
   }
@@ -56,7 +65,7 @@ class _RoomFormState extends State<RoomForm> {
   Widget build(BuildContext context) {
     return AlertDialog(
       backgroundColor: PrimaryTheme.appWhite,
-      title: const Text("Room Details"),
+      title: const Text("Course Details"),
       shape: const LinearBorder(),
       content: Form(
         child: Container(
@@ -68,7 +77,7 @@ class _RoomFormState extends State<RoomForm> {
                 children: [
                   const Expanded(
                     flex: 1,
-                    child: Text("Room-ID"),
+                    child: Text("Course-ID"),
                   ),
                   const SizedBox(width: 8),
                   Expanded(
@@ -84,7 +93,39 @@ class _RoomFormState extends State<RoomForm> {
                 children: [
                   const Expanded(
                     flex: 1,
-                    child: Text("Max-Capacity"),
+                    child: Text("Name"),
+                  ),
+                  const SizedBox(width: 8),
+                  Expanded(
+                    flex: 2,
+                    child: TextField(
+                      controller: nameController,
+                    ),
+                  ),
+                ],
+              ),
+              const SizedBox(height: 16),
+              Row(
+                children: [
+                  const Expanded(
+                    flex: 1,
+                    child: Text("No. of Lectures"),
+                  ),
+                  const SizedBox(width: 8),
+                  Expanded(
+                    flex: 2,
+                    child: TextField(
+                      controller: lectureController,
+                    ),
+                  ),
+                ],
+              ),
+              const SizedBox(height: 16),
+              Row(
+                children: [
+                  const Expanded(
+                    flex: 1,
+                    child: Text("Capacity"),
                   ),
                   const SizedBox(width: 8),
                   Expanded(
