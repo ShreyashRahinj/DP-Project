@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:frontend/controller/api/resources.dart';
+import 'package:frontend/controller/providers/resources_data_provider.dart';
 import 'package:frontend/view/components/forms/course_form.dart';
 import 'package:frontend/view/components/forms/division_form.dart';
 import 'package:frontend/view/components/forms/lecture_slot_form.dart';
@@ -8,6 +10,8 @@ import 'package:frontend/view/components/resources_component.dart';
 import 'package:frontend/view/constants/colors.dart';
 import 'package:frontend/view/constants/resources.dart';
 import 'package:frontend/view/constants/routes.dart';
+import 'package:frontend/view/widgets/custom_button.dart';
+import 'package:provider/provider.dart';
 
 class CreateTimetableScreen extends StatefulWidget {
   const CreateTimetableScreen({super.key});
@@ -100,6 +104,7 @@ class _CreateTimetableScreenState extends State<CreateTimetableScreen> {
       ),
       body: Column(
         mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Padding(
             padding: const EdgeInsets.symmetric(vertical: 8.0),
@@ -118,6 +123,21 @@ class _CreateTimetableScreenState extends State<CreateTimetableScreen> {
                 },
               ),
             ),
+          ),
+          CustomButton(
+            buttonText: 'Save Data',
+            onTap: () async {
+              ResourceAPIService api = ResourceAPIService();
+              final provider =
+                  Provider.of<ResourcesDataProvider>(context, listen: false);
+              await api.saveAllData(
+                lectureSlots: provider.lectureSlots,
+                rooms: provider.rooms,
+                teachers: provider.teachers,
+                courses: provider.courses,
+                divisions: provider.divisions,
+              );
+            },
           ),
         ],
       ),
