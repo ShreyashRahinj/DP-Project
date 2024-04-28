@@ -6,8 +6,9 @@ import 'package:http/http.dart' as http;
 
 import '../../model/room.dart';
 
-class OpenAIService {
-  Future<String> postLectureSlots(LectureSlot lectureSlot) async {
+class ResourceAPIService {
+  static Future<Map<String, String>> postLectureSlots(
+      LectureSlot lectureSlot) async {
     try {
       final res = await http.post(
         Uri.parse('http://127.0.0.1:8000/resources/lecture-slot/'),
@@ -17,16 +18,15 @@ class OpenAIService {
         body: lectureSlot.toJson(),
       );
       if (res.statusCode == 201) {
-        print(res.statusCode);
-        return "Successful";
+        return {'message': "Successful"};
       }
-      return 'An internal error occurred';
+      return {'error': "An Internal Server Error Occurred"};
     } catch (e) {
-      return e.toString();
+      return {'error': e.toString()};
     }
   }
 
-  Future<String> postCourse(Course course) async {
+  static Future<Map<String, String>> postCourse(Course course) async {
     try {
       final res = await http.post(
         Uri.parse('http://127.0.0.1:8000/resources/course/'),
@@ -36,16 +36,15 @@ class OpenAIService {
         body: course.toJson(),
       );
       if (res.statusCode == 201) {
-        print(res.statusCode);
-        return "Successful";
+        return {'message': "Successful"};
       }
-      return 'An internal error occurred';
+      return {'error': "An Internal Server Error Occurred"};
     } catch (e) {
-      return e.toString();
+      return {'error': e.toString()};
     }
   }
 
-  Future<String> postDivision(Division division) async {
+  static Future<Map<String, String>> postDivision(Division division) async {
     try {
       final res = await http.post(
         Uri.parse('http://127.0.0.1:8000/resources/division/'),
@@ -55,16 +54,15 @@ class OpenAIService {
         body: division.toJson(),
       );
       if (res.statusCode == 201) {
-        print(res.statusCode);
-        return "Successful";
+        return {'message': "Successful"};
       }
-      return 'An internal error occurred';
+      return {'error': "An Internal Server Error Occurred"};
     } catch (e) {
-      return e.toString();
+      return {'error': e.toString()};
     }
   }
 
-  Future<String> postRoom(Room room) async {
+  static Future<Map<String, String>> postRoom(Room room) async {
     try {
       final res = await http.post(
         Uri.parse('http://127.0.0.1:8000/resources/room/'),
@@ -74,16 +72,15 @@ class OpenAIService {
         body: room.toJson(),
       );
       if (res.statusCode == 201) {
-        print(res.statusCode);
-        return "Successful";
+        return {'message': "Successful"};
       }
-      return 'An internal error occurred';
+      return {'error': "An Internal Server Error Occurred"};
     } catch (e) {
-      return e.toString();
+      return {'error': e.toString()};
     }
   }
 
-  Future<String> postTeacher(Teacher teacher) async {
+  static Future<Map<String, String>> postTeacher(Teacher teacher) async {
     try {
       final res = await http.post(
         Uri.parse('http://127.0.0.1:8000/resources/teacher/'),
@@ -93,12 +90,11 @@ class OpenAIService {
         body: teacher.toJson(),
       );
       if (res.statusCode == 201) {
-        print(res.statusCode);
-        return "Successful";
+        return {'message': "Successful"};
       }
-      return 'An internal error occurred';
+      return {'error': "An Internal Server Error Occurred"};
     } catch (e) {
-      return e.toString();
+      return {'error': e.toString()};
     }
   }
 }
